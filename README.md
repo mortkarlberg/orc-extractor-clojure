@@ -1,7 +1,13 @@
 # orc-extractor
 Extract wave, midi and other data from orc-files (Voyetra Digital Orchestrator). This is a re-implementation of [this unfinished Phyton-project](https://github.com/Brygghuset/orc-extractor).
 
-## File Description
+## Usage
+
+FIXME: explanation
+
+    $ java -jar orc-extractor-0.1.0-standalone.jar [args]
+
+## ORC File Description
 All ORC files have the same format as RMI, but with some differences:
 * ORC files don't use DLS sample banks.
 * There is only one WAV track with all digital audio samples.
@@ -33,3 +39,7 @@ File Root
 * RIFF explained - http://www.tactilemedia.com/info/MCI_Control_Info.html
 * http://soundfile.sapp.org/doc/WaveFormat/
 * http://www.music.mcgill.ca/~ich/classes/mumt306/StandardMIDIfileformat.html
+
+## License
+
+Copyright © 2019 Mårten Karlberg
