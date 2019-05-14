@@ -8,7 +8,5 @@ profiles.clj
 /lib/
 /target/
 .cpcache/
-.hgignore
-.hg/
 .lein-*
 .nrepl-port
