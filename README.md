@@ -1,5 +1,5 @@
-# orc-extractor-clojure
-Extract wave, midi and other data from orc-files (Voyetra Digital Orchestrator). This is a re-implementation of the unfinished Phyton-project [orc-extractor](https://github.com/Brygghuset/orc-extractor).
+# orc-extractor
+Extract wave, midi and other data from orc-files (Voyetra Digital Orchestrator). This is a re-implementation of [this unfinished Phyton-project](https://github.com/Brygghuset/orc-extractor).
 
 ## File Description
 All ORC files have the same format as RMI, but with some differences:
