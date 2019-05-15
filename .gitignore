@@ -5,6 +5,7 @@ profiles.clj
 *.class
 /checkouts/
 /classes/
+/data/
 /lib/
 /target/
 .cpcache/
