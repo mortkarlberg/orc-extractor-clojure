@@ -1,5 +1,8 @@
 # orc-extractor
-Extract wave, midi and other data from orc-files (Voyetra Digital Orchestrator). This is a re-implementation of [this unfinished Phyton-project](https://github.com/Brygghuset/orc-extractor).
+Extract wave, midi and other data from orc-files (Voyetra Digital Orchestrator).
+
+### Made simple?
+Hopefully... This is a re-implementation of [this unfinished Phyton-project](https://github.com/Brygghuset/orc-extractor). For no other reason than me wanting to learn Clojure.
 
 ## Usage
 
@@ -32,6 +35,8 @@ File Root
 * MIDI can have a minimum tempo of 16 BPM and a maximum of 500 BPM.
 
 ## Resources
+
+### Domain
 * http://www.vgmpf.com/Wiki/index.php?title=ORC
 * http://www.vgmpf.com/Wiki/index.php?title=RMI
 * http://www.vgmpf.com/Wiki/index.php?title=MIDI
@@ -39,6 +44,10 @@ File Root
 * RIFF explained - http://www.tactilemedia.com/info/MCI_Control_Info.html
 * http://soundfile.sapp.org/doc/WaveFormat/
 * http://www.music.mcgill.ca/~ich/classes/mumt306/StandardMIDIfileformat.html
+
+### Technical sollution
+* https://www.oreilly.com/library/view/clojure-cookbook/9781449366384/ch04.html
+* https://howtodoinjava.com/java7/nio/memory-mapped-files-mappedbytebuffer/
 
 ## License
 
