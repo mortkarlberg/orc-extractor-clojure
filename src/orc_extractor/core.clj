@@ -3,6 +3,6 @@
   (:gen-class))
 
 (defn -main
-  "Extract orc file to separate midi and wave files"
+  "Extract orc file to separate midi and wave files."
   [& args]
   (println "Hello, Voyetra Digital Orcestrator user!"))
