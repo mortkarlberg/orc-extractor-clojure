@@ -13,9 +13,11 @@
       (is function? orc-file/check-header))
 
     (testing "header name equals expected"
-      (is (orc-file/check-header (byte-array [82 73 70 70]) "RIFF")))
+      (is
+        (orc-file/check-header (byte-array [82 73 70 70]) "RIFF")))
     
     (testing "header name not equal to expected"
-      (is (not (orc-file/check-header (byte-array [81 70 17 7]) "RIFF"))))
+      (is (thrown? IllegalArgumentException
+        (orc-file/check-header (byte-array [81 70 17 7]) "RIFF"))))
   )
 )
