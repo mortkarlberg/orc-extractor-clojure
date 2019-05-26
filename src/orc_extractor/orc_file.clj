@@ -14,13 +14,11 @@
     ;TODO: parse voyl data and use it when handling waves
     ;TODO: write each wave to its own file, maybe with padding zeroes to push it to its correct start point in the song
     ;TODO bonus: write a compound sequencer file from all data in some open format
-    (let [first-bytes (clj-mmap/get-bytes orc-file 0 100)]
-      (println (str "First 100 bytes of orc-file, " (String. first-bytes)))))
-)
-
-(defn read-and-handle
-  "Read some bytes from mmap and handle with some method"
-  [orc-file start length handler & handler-args]
+    (let [header-bytes (clj-mmap/get-bytes orc-file 0 8)]
+      (println (str "First 8 bytes of orc-file, " (String. header-bytes)))
+      ;(check-header header-bytes "RIFF")
+    )
+  )
 )
 
 ;def check_riff_header(file, header_name):
@@ -42,15 +40,23 @@
   "Parse a RIFF-header and return the length of the following data chunk."
   [header-bytes, expected-header-name]
 
-  ;TODO: only consider sub-array (as long as expected)
+  ;TODO: only consider sub-array (as long as expected-header-name) - https://clojuredocs.org/clojure.core/subvec
   (let [header-name (String. header-bytes)]
     (println header-name)
     (if (not= header-name expected-header-name)
       (throw (IllegalArgumentException.
         (str "Expected header name " expected-header-name ", was " header-name))))
   )
+  ;TODO: return header length instead
+  true
+  ;(header-length header-bytes)
+)
 
-  ;TODO: parse last four bytes as litte endian int and return it
+(defn header-length
+  "Returns integer of little endian byte array."
+  [bytes]
+
+  (println (type bytes))
   true
 )
 

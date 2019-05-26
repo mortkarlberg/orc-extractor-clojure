@@ -18,6 +18,8 @@
     
     (testing "header name not equal to expected"
       (is (thrown? IllegalArgumentException
-        (orc-file/check-header (byte-array [81 70 17 7]) "RIFF"))))
-  )
-)
+        (orc-file/check-header (byte-array [81 70 17 7]) "RIFF"))))))
+
+(deftest test-header-length
+  (testing "positive length"
+    (is (orc-file/header-length (byte-array [82 73 70 70])))))
