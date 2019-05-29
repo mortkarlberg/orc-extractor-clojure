@@ -13,8 +13,15 @@
       (is function? orc-file/check-header))
 
     (testing "header name equals expected"
-      (is
-        (orc-file/check-header (byte-array [82 73 70 70]) "RIFF")))
+      (is (=
+        (orc-file/check-header (byte-array [0x52 0x49 0x46 0x46 0x38 0x6C 0x04 0x00])
+                               "RIFF")
+        289848))
+
+      (is (=
+        (orc-file/check-header (byte-array [0x57 0x41 0x56 0x45 0x66 0x6D 0x74 0x20 0x12 0x00 0x00 0x00])
+                               "WAVEfmt ")
+        0)))
     
     (testing "header name not equal to expected"
       (is (thrown? IllegalArgumentException
