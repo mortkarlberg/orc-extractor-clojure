@@ -17,9 +17,7 @@
     (let [header-bytes (clj-mmap/get-bytes orc-file 0 8)]
       (println (str "First 8 bytes of orc-file, " (String. header-bytes)))
       ;(check-header header-bytes "RIFF")
-    )
-  )
-)
+    )))
 
 ;def check_riff_header(file, header_name):
 ;    header_bytes = file.read(len(header_name))
@@ -55,9 +53,6 @@
 (defn header-length
   "Returns integer of little endian byte array."
   [bytes]
-
-  (println (type bytes))
-  true
-)
+  0)
 
 ;(read-file "./data/Demosong.orc")
