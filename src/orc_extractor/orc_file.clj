@@ -53,6 +53,12 @@
 (defn header-length
   "Returns integer of little endian byte array."
   [bytes]
-  0)
+  (reduce +
+    (map (fn [i]
+           (let [shift (* i 8)]
+             (bit-shift-left (bit-and (nth bytes i)
+                                       0x000000FF)
+                              shift)))
+         (range 0 (count bytes)))))
 
 ;(read-file "./data/Demosong.orc")

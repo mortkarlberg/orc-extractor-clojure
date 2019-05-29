@@ -20,15 +20,19 @@
       (is (thrown? IllegalArgumentException
         (orc-file/check-header (byte-array [81 70 17 7]) "RIFF"))))))
 
-;header-name length
-;52494646 C20F0000 = RIFF 4034
-;524D4944 64617461 B60F0000 = RMID data 4022
-
 (deftest test-header-length
   (testing "Little endian byte array to number"
     (are [x y] (= x y)
-      0 (orc-file/header-length (byte-array [0x00 0x00 0x00 0x00]))
-      1 (orc-file/header-length (byte-array [0x01 0x00 0x00 0x00]))
-      16 (orc-file/header-length (byte-array [0x10 0x00 0x00 0x00]))
+      0 (orc-file/header-length (byte-array [0x00]))
+      1 (orc-file/header-length (byte-array [0x01 0x00]))
+      1 (orc-file/header-length (byte-array [0x01 0x00 0x00]))
+      16 (orc-file/header-length (byte-array [0x10 0x00 0x00 0x00 0x00]))
+      4096 (orc-file/header-length (byte-array [0x00 0x10 0x00 0x00 0x00]))
+      1048576 (orc-file/header-length (byte-array [0x00 0x00 0x10 0x00 0x00]))
+      68719476752 (orc-file/header-length (byte-array [0x10 0x00 0x00 0x00 0x10]))
       4034 (orc-file/header-length (byte-array [0xC2 0x0F 0x00 0x00]))
-      4022 (orc-file/header-length (byte-array [0xB6 0x0F 0x00 0x00])))))
+      4022 (orc-file/header-length (byte-array [0xB6 0x0F 0x00 0x00]))
+      288495364 (orc-file/header-length (byte-array [0x04 0x17 0x32 0x11]))
+      2361002 (orc-file/header-length (byte-array [0xAA 0x06 0x24]))
+      1103806599937 (orc-file/header-length (byte-array [0x01 0x13 0x00 0x00 0x01 0x01]))
+      59857 (orc-file/header-length (byte-array [0xD1 0xE9])))))
