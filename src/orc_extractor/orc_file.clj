@@ -37,14 +37,12 @@
 
 (defn parse-header
   "Parse a RIFF-header and return the length of the following data chunk."
-  [header-bytes, expected-header-name]
-  (let [header-name (String. (subvec header-bytes 0 (count expected-header-name)))]
-    (println header-name)
-    (if (not= header-name expected-header-name)
+  [header, expected-header-name]
+  (let [name-length (count expected-header-name)
+        name (take name-length header)]
+    (if (not= name (seq expected-header-name))
       (throw (IllegalArgumentException.
-        (str "Expected header name " expected-header-name ", was " header-name)))))
-
-  (bin-utils/header-length (subvec header-bytes -4)))
-
+              (str "Expected header name " expected-header-name ", was " name))))
+    (bin-utils/header-length (drop name-length header))))
 
 ;(read-file "./data/Demosong.orc")
