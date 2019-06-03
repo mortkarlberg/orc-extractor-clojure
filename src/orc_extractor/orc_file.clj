@@ -1,5 +1,6 @@
 (ns orc-extractor.orc-file
   (:require [orc-extractor.orc-file-constants :as orc-const]
+            [orc-extractor.binary-utils :as bin-utils]
             [clj-mmap]))
 
 (defn read-file [filename]
@@ -34,31 +35,16 @@
 ;
 ;return size, read_bytes
 
-(defn check-header
+(defn parse-header
   "Parse a RIFF-header and return the length of the following data chunk."
   [header-bytes, expected-header-name]
-
-  ;TODO: only consider sub-array (as long as expected-header-name) - https://clojuredocs.org/clojure.core/subvec
-  (let [header-name (String. header-bytes)]
+  (let [header-name (String. (subvec header-bytes 0 (count expected-header-name)))]
     (println header-name)
     (if (not= header-name expected-header-name)
       (throw (IllegalArgumentException.
-        (str "Expected header name " expected-header-name ", was " header-name))))
-  )
-  ;TODO: return header length instead
-  true
-  ;(header-length header-bytes)
-)
+        (str "Expected header name " expected-header-name ", was " header-name)))))
 
-(defn header-length
-  "Returns integer of little endian byte array."
-  [bytes]
-  (reduce +
-    (map (fn [i]
-           (let [shift (* i 8)]
-             (bit-shift-left (bit-and (nth bytes i)
-                                       0x000000FF)
-                              shift)))
-         (range 0 (count bytes)))))
+  (bin-utils/header-length (subvec header-bytes -4)))
+
 
 ;(read-file "./data/Demosong.orc")
