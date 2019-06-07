@@ -20,21 +20,6 @@
       ;(check-header header-bytes "RIFF")
     )))
 
-;def check_riff_header(file, header_name):
-;    header_bytes = file.read(len(header_name))
-;    print(bytes)
-;    if header_name != header_bytes:
-;        print("Unknown file content.", header_bytes)
-;        exit()
-;
-;    size_bytes = file.read(4)
-;    size = int.from_bytes(size_bytes, "little")
-;
-;    read_bytes = header_bytes + size_bytes
-;    print(size, read_bytes)
-;
-;return size, read_bytes
-
 (defn parse-header
   "Parse a RIFF-header and return the length of the following data chunk."
   [header, expected-header-name]
