@@ -8,8 +8,10 @@
     (is function? headers/locate-headers))
   
   (testing "prints"
-    (is (= true
-           (headers/locate-headers nil)))))
+    ;TODO replace map with mocked mmap
+    (let [test-file-mock {}]
+      (is (= true
+             (headers/locate-headers test-file-mock))))))
 
 (deftest test-parse-header
   (testing "function callable"

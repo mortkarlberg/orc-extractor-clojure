@@ -7,8 +7,9 @@
 
   (with-open [orc-file (clj-mmap/get-mmap filename)
               midi-out (clj-mmap/get-mmap "./data/extracted.mid")]
-    (let [bytes (clj-mmap/get-bytes orc-file 0 8)]
-      (println (str "First 8 bytes of orc-file, " (String. bytes)))
-    )))
+    (headers/locate-nested-headers orc-file)))
 
-;(read-file "./data/Demosong.orc")
+;TODO don't require signed commits for personal github projects
+;TODO test with more files
+(comment
+  (read-file "./data/Demosong.orc"))
