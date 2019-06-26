@@ -9,7 +9,12 @@
               midi-out (clj-mmap/get-mmap "./data/extracted.mid")]
     (headers/locate-nested-headers orc-file)))
 
-;TODO don't require signed commits for personal github projects
-;TODO test with more files
 (comment
-  (read-file "./data/Demosong.orc"))
+  (read-file "./data/GI2final.orc")
+  (read-file "./data/HUND.orc")
+  (read-file "./data/KATT.orc")
+  (read-file "./data/NEUENO.orc")
+  (read-file "./data/NEUID.orc")
+  (read-file "./data/NYYYYPON.orc")
+  (read-file "./data/Demosong.orc")
+  (read-file "./data/Sample.orc"))
