@@ -12,7 +12,7 @@
 
 (defn parse-header
   "Parse a RIFF-header and return the length of the following data chunk."
-  [header, expected-header-name]
+  [header expected-header-name]
   (println "Header to parse" header)
   (println "Expected header name" expected-header-name)
   (let [name-length (count expected-header-name)
@@ -26,6 +26,7 @@
   [header-name start-index chunk-size]
   {:header-name header-name
    :start-index start-index
+   :header-size (+ (count header-name) orc-const/RIFF_HEADER_SIZE_BYTES)
    :chunk-size chunk-size})
 
 (defn offset-and-pad-index
