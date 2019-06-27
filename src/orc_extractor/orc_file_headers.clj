@@ -44,7 +44,7 @@
         bytes (clj-mmap/get-bytes orc-file-mmap start header-length)
         chunk-size (parse-header bytes header-name)
         location (build-location header-name start chunk-size)
-        located (conj (or located-headers []) location)
+        located (assoc (or located-headers {}) header-name location)
         next-start (offset-and-pad-index start header-length chunk-size)
         next-headers (next expected-headers)]
     (println "Inner start" start)
@@ -64,11 +64,12 @@
   [orc-file-mmap & [expected-headers located-headers start-index]]
   (println "######################")
   (let [headers (or expected-headers defualt-expected-headers)
-        prev-located (or located-headers [])
+        prev-located (or located-headers {})
         start (or start-index 0)
         nested (first headers)
         outer (first nested)
-        outer-located (first (locate-headers orc-file-mmap [outer] prev-located start))
+        outer-located-map (locate-headers orc-file-mmap [outer] prev-located start)
+        outer-located (get outer-located-map outer)
         inner (next nested)
         outer-size (+ orc-extractor.orc-file-constants/RIFF_HEADER_SIZE_BYTES (count outer))
         inner-start (+ start outer-size)
