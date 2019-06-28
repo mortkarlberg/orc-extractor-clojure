@@ -22,14 +22,14 @@
               (str "Expected header name " expected-header-name ", was " name ", from " header))))
     (bin-utils/header-length (drop name-length header))))
 
-(defn build-location
+(defn- build-location
   [header-name start-index chunk-size]
   {:header-name header-name
    :start-index start-index
    :header-size (+ (count header-name) orc-const/RIFF_HEADER_SIZE_BYTES)
    :chunk-size chunk-size})
 
-(defn offset-and-pad-index
+(defn- offset-and-pad-index
   [index & offsets]
   (let [sum (apply + index offsets)]
     (if (even? sum)
