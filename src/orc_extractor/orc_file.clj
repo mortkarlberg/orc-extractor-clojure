@@ -10,7 +10,8 @@
   (with-open [orc-file-mmap (clj-mmap/get-mmap orc-file-path)]
     (let [headers (orc-headers/locate-nested-headers orc-file-mmap)]
       (midi/write-midi-file headers orc-file-mmap orc-file-path)
-      (wave/write-wave-file headers orc-file-mmap orc-file-path))))
+      (wave/write-wave-file headers orc-file-mmap orc-file-path)
+      (wave/write-voyl-file headers orc-file-mmap orc-file-path))))
 
 (comment
   (read-file "./data/GI2final.orc")

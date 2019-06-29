@@ -25,7 +25,8 @@
   (.write file (calculate-riff-size headers)))
 
 ;http://soundfile.sapp.org/doc/WaveFormat/
-(defn write-wave-file [headers orc-file-mmap orc-file-path]
+(defn write-wave-file
+  [headers orc-file-mmap orc-file-path]
   (println "Headers:" headers)
   (let [wave-file-path (str/replace orc-file-path ".orc" ".wav")]
     (with-open [file (io/output-stream wave-file-path)]
@@ -35,3 +36,13 @@
       ;TODO write data header
       ;TODO write wave data
       )))
+
+(defn write-voyl-file
+  [headers orc-file-mmap orc-file-path]
+  (let [voyl-file-path (str/replace orc-file-path ".orc" ".voyl")
+        voyl-header    (get headers orc-const/RIFF_HEADER_WAVE_VOYL)
+        start          (+ (:start-index voyl-header) (:header-size voyl-header))
+        size           (:chunk-size voyl-header)
+        voyl-data      (clj-mmap/get-bytes orc-file-mmap start size)]
+    (with-open [file (io/output-stream voyl-file-path)]
+      (.write file voyl-data))))
