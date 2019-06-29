@@ -16,7 +16,7 @@
   (println "Header to parse" header)
   (println "Expected header name" expected-header-name)
   (let [name-length (count expected-header-name)
-        name (take name-length header)]
+        name        (take name-length header)]
     (if (not= name (seq expected-header-name))
       (throw (IllegalArgumentException.
               (str "Expected header name " expected-header-name ", was " name ", from " header))))
@@ -39,15 +39,15 @@
 (defn locate-headers
   "Parse all headers and return a collection of their locations."
   [orc-file-mmap expected-headers & [located-headers start-index]]
-  (let [header-name (first expected-headers)
+  (let [header-name   (first expected-headers)
         header-length (+ orc-const/RIFF_HEADER_SIZE_BYTES (count header-name))
-        start (or start-index 0)
-        bytes (clj-mmap/get-bytes orc-file-mmap start header-length)
-        chunk-size (parse-header bytes header-name)
-        location (build-location header-name start chunk-size)
-        located (assoc (or located-headers {}) header-name location)
-        next-start (offset-and-pad-index start header-length chunk-size)
-        next-headers (next expected-headers)]
+        start         (or start-index 0)
+        bytes         (clj-mmap/get-bytes orc-file-mmap start header-length)
+        chunk-size    (parse-header bytes header-name)
+        location      (build-location header-name start chunk-size)
+        located       (assoc (or located-headers {}) header-name location)
+        next-start    (offset-and-pad-index start header-length chunk-size)
+        next-headers  (next expected-headers)]
     (println "Inner start" start)
     (println start "Inner expected headers" expected-headers)
     (println start "Inner header name" header-name)
@@ -64,19 +64,19 @@
   "Parse all nested headers and return a flat collection of their locations."
   [orc-file-mmap & [expected-headers located-headers start-index]]
   (println "######################")
-  (let [headers (or expected-headers defualt-expected-headers)
-        prev-located (or located-headers {})
-        start (or start-index 0)
-        nested (first headers)
-        outer (first nested)
+  (let [headers           (or expected-headers defualt-expected-headers)
+        prev-located      (or located-headers {})
+        start             (or start-index 0)
+        nested            (first headers)
+        outer             (first nested)
         outer-located-map (locate-headers orc-file-mmap [outer] prev-located start)
-        outer-located (get outer-located-map outer)
-        inner (next nested)
-        outer-size (+ orc-extractor.orc-file-constants/RIFF_HEADER_SIZE_BYTES (count outer))
-        inner-start (+ start outer-size)
-        located (locate-headers orc-file-mmap inner prev-located inner-start)
-        next-start (offset-and-pad-index start outer-size (outer-located :start-index) (outer-located :chunk-size))
-        next-nested (next headers)]
+        outer-located     (get outer-located-map outer)
+        inner             (next nested)
+        outer-size        (+ orc-extractor.orc-file-constants/RIFF_HEADER_SIZE_BYTES (count outer))
+        inner-start       (+ start outer-size)
+        located           (locate-headers orc-file-mmap inner prev-located inner-start)
+        next-start        (offset-and-pad-index start outer-size (outer-located :start-index) (outer-located :chunk-size))
+        next-nested       (next headers)]
     (println "Nested start" start)
     (println start "Headers" headers)
     (println start "Nested headers" nested)
