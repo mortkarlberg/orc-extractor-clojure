@@ -2,9 +2,8 @@
 
 ;TODO: why is not % working in post condition?
 ;TODO: make sure loop is lazy and will not fill stack
-
 (defn header-length
-  "Calculates unsigned integer of little endian byte array."
+  "Calculate unsigned integer of little endian byte array."
   {:test #(do            
             (assert (= 0 (header-length (byte-array [0x00]))))
             (assert (= 1 (header-length (byte-array [0x01 0x00]))))
@@ -31,4 +30,26 @@
                                    shift)))
                (range 0 (count bytes)))))
 
-;(test #'header-length)
+(defn int-to-4-byte-array
+  "Transform unsigned integer to a little endian byte array of length four."
+  {:test #(do
+            (assert (= (seq (byte-array [0x00 0x00 0x00 0x00])) (seq (int-to-4-byte-array 0))))
+            (assert (= (seq (byte-array [0x01 0x00 0x00 0x00])) (seq (int-to-4-byte-array 1))))
+            (assert (= (seq (byte-array [0xFF 0x00 0x00 0x00])) (seq (int-to-4-byte-array 255))))
+            (assert (= (seq (byte-array [0x00 0x01 0x00 0x00])) (seq (int-to-4-byte-array 256))))
+            (assert (= (seq (byte-array [0x00 0x10 0x00 0x00])) (seq (int-to-4-byte-array 4096))))
+            (assert (= (seq (byte-array [0x00 0xFF 0x00 0x00])) (seq (int-to-4-byte-array 65280))))
+            (assert (= (seq (byte-array [0x00 0x00 0xFF 0x00])) (seq (int-to-4-byte-array 16711680))))
+            (assert (= (seq (byte-array [0x04 0x17 0x32 0x11])) (seq (int-to-4-byte-array 288495364))))
+            (assert (= (seq (byte-array [0x00 0x00 0x00 0xFF])) (seq (int-to-4-byte-array 4278190080)))))}
+  [integer]
+  (byte-array (loop [i     0
+                     bytes []]
+                (if (>= i 4)
+                  bytes
+                  (recur (inc i)
+                         (conj bytes (bit-and (bit-shift-right integer (* i 8)) 0x000000FF)))))))
+
+(comment
+  (test #'int-to-4-byte-array)
+  (test #'header-length))
