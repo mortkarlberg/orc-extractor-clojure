@@ -1,8 +1,9 @@
 (ns orc-extractor.wave-extractor
   (:require [clj-mmap]
+            [clojure.java.io :as io]
             [clojure.string :as str]
-            [orc-extractor.orc-file-constants :as orc-const]
-            [clojure.java.io :as io]))
+            [orc-extractor.binary-utils :as bin-utils]
+            [orc-extractor.orc-file-constants :as orc-const]))
 
 (defn- pad-size [size]
   (if (even? size)
@@ -16,13 +17,16 @@
                        (pad-size (:chunk-size fmt-header))
                        (:header-size data-header)
                        (pad-size (:chunk-size data-header)))]
-    ;TODO transform riff-size to little endian byte array
-    (println (byte-array [riff-size]))
-    (byte-array [riff-size])))
+    (bin-utils/int-to-4-byte-array riff-size)))
 
 (defn- write-riff-header [file headers]
   (.write file orc-const/RIFF_HEADER_START)
   (.write file (calculate-riff-size headers)))
+
+(defn- write-data [file header orc-file-mmap]
+  ;TODO write header
+  ;TODO write data
+  )
 
 ;http://soundfile.sapp.org/doc/WaveFormat/
 (defn write-wave-file
@@ -31,11 +35,8 @@
   (let [wave-file-path (str/replace orc-file-path ".orc" ".wav")]
     (with-open [file (io/output-stream wave-file-path)]
       (write-riff-header file headers)
-      ;TODO write fmt header
-      ;TODO write fmt data
-      ;TODO write data header
-      ;TODO write wave data
-      )))
+      (write-data file (orc-const/RIFF_HEADER_WAVE_START headers) orc-file-mmap)
+      (write-data file (orc-const/RIFF_HEADER_WAVE_DATA headers) orc-file-mmap))))
 
 (defn write-voyl-file
   [headers orc-file-mmap orc-file-path]
