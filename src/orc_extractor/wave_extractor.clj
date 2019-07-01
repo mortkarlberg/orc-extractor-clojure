@@ -24,9 +24,10 @@
   (.write file (calculate-riff-size headers)))
 
 (defn- write-data [file header orc-file-mmap]
-  ;TODO write header
-  ;TODO write data
-  )
+  (let [{:keys [start-index header-size chunk-size]} header
+        size (+ header-size chunk-size)
+        data (clj-mmap/get-bytes orc-file-mmap start-index size)]
+    (.write file data)))
 
 ;http://soundfile.sapp.org/doc/WaveFormat/
 (defn write-wave-file
@@ -35,8 +36,8 @@
   (let [wave-file-path (str/replace orc-file-path ".orc" ".wav")]
     (with-open [file (io/output-stream wave-file-path)]
       (write-riff-header file headers)
-      (write-data file (orc-const/RIFF_HEADER_WAVE_START headers) orc-file-mmap)
-      (write-data file (orc-const/RIFF_HEADER_WAVE_DATA headers) orc-file-mmap))))
+      (write-data file (get headers orc-const/RIFF_HEADER_WAVE_START) orc-file-mmap)
+      (write-data file (get headers orc-const/RIFF_HEADER_WAVE_DATA) orc-file-mmap))))
 
 (defn write-voyl-file
   [headers orc-file-mmap orc-file-path]
