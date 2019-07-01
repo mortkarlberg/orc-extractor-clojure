@@ -1,0 +1,47 @@
+This file contains my findings on the demo song that comes bundled with DOP.
+-----------------------------
+
+Audio tracks in MIDI-file:
+
+* Track 5 - Vocal, Guitar, Horns
+
+4D54726B - chunk type [MTrk]
+0000004B - chunk length [75]
+00 - delta time (dt)
+FF7F 05 03 0001 0004 - Sequenser specific meta-event (SSME) + length + sequencer id + key [orc track number, zero indexed?] + val [4]
+00 - dt
+FF7F 04 03 0014 01 - SSME + len + sid + key [?] + val [1]
+00 - dt
+FF7F 05 03 0002 0000 - SSME + len + sid + key [?] + val [0]
+00 - dt
+FF03 14 566F63616C2C204775697461722C20486F726E73 - Track name + length [20] + data [Vocal, Guitar, Horns]
+00 - dt
+FF21 01 00 - midi port - len - data [midi port number? not relevant?]
+00 - dt
+FF7F 04 03 0008 40 - SSME + len + sid + key [0008 = vol?] + val [64]
+00 - dt
+FF7F 04 03 0009 40 - SSME + len + sid + key [0009 = pan] + val [64]
+00 - dt
+FF2F00 - End of track
+
+
+* Track 6 - Female laugh
+
+4D54726B - MTrk
+00000043 - len
+00 - dt
+FF7F 05 03 0001 0005 - SSME + len + sid + key [orc track number, zero indexed?] + val [4]
+00 - dt
+FF7F 04 03 0014 01 - SSME + len + sid + key [?] + val [1]
+00 - dt
+FF7F 05 03 0002 0000 - SSME + len + sid + key [?] + val [0]
+00 - dt
+FF03 0C 46656D616C65204C61756768 - Track name + len [12] + data [Female Laugh]
+00 - dt
+FF21 01 00 - midi port - len - data [midi port number? not relevant?]
+00 - dt
+FF7F 04 03 0008 40 - SSME + len + sid + key [0008 = vol?] + val [64]
+00 - dt 
+FF7F 04 03 0009 40 - SSME + len + sid + key [0009 = pan] + val [64]
+00 - dt 
+FF2F00 - End of track

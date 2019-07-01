@@ -67,6 +67,7 @@ File Root
 * RIFF explained - <http://www.tactilemedia.com/info/MCI_Control_Info.html>
 * <http://soundfile.sapp.org/doc/WaveFormat/>
 * <http://www.music.mcgill.ca/~ich/classes/mumt306/StandardMIDIfileformat.html>
+* <http://somascape.org/midi/tech/mfile.html>
 
 ### Technical sollution
 

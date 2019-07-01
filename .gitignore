@@ -5,7 +5,10 @@ profiles.clj
 *.class
 /checkouts/
 /classes/
-/data/
+/data/*.orc
+/data/*.wav
+/data/*.mid
+/data/*.voyl
 /lib/
 /target/
 .cpcache/
